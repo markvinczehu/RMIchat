@@ -12,15 +12,15 @@ public class ChatClient extends UnicastRemoteObject implements Chat {
     private String name;
     private Server server;
     private static final long serialVersionUID = 1L;
-    private GUI gui;
+    private View view;
 
-    public ChatClient(GUI gui) throws RemoteException, MalformedURLException, NotBoundException {
+    public ChatClient(View view) throws RemoteException, MalformedURLException, NotBoundException {
         super();
-        this.gui = gui;
+        this.view = view;
         server = (Server) Naming.lookup("rmi://127.0.0.1/" + Server.DEFAULT_NAME);
     }
 
-    public boolean isNameOkay(String name) throws RemoteException {
+    public boolean isNameOk(String name) throws RemoteException {
         if (server.logInPossible(name)) {
             server.addUser(name, this);
             this.name = name;
@@ -31,12 +31,12 @@ public class ChatClient extends UnicastRemoteObject implements Chat {
 
     @Override
     public void sendUserList(String[] userList) {
-        gui.newUserList(userList);
+        view.newUserList(userList);
     }
 
     @Override
     public void receiveMessage(String message) {
-        gui.setMessage(message);
+        view.setMessage(message);
     }
 
     public void sendMessage(String message) {

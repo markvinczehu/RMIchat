@@ -19,7 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class GUI extends Application {
+public class View extends Application {
     private ListView<String> userList;
     private TextArea window;
     private TextField input;
@@ -28,11 +28,11 @@ public class GUI extends Application {
     @Override
     public void start(Stage stage) {
         Platform.setImplicitExit(false);
-        this.dialog();
+        this.Dialog();
         this.setStage(stage);
     }
 
-    private void dialog() {
+    private void Dialog() {
         int i = 1;
         while (i++ <= 3) {
             TextInputDialog dialog = this.createTextInputDialog();
@@ -43,7 +43,7 @@ public class GUI extends Application {
             }
             if (result.get().length() > 0 && result.get().length() < 20) {
                 this.initClient();
-                if (this.isNicknameOkay(result.get()))
+                if (this.isNameOk(result.get()))
                     return;
                 else
                     errorMessage = "Nickname already assigned. Please select another.";
@@ -55,10 +55,10 @@ public class GUI extends Application {
         this.closeThis();
     }
 
-    private boolean isNicknameOkay(String s) {
+    private boolean isNameOk(String s) {
         boolean b = false;
         try {
-            b = this.client.isNameOkay(s);
+            b = this.client.isNameOk(s);
         } catch (RemoteException e) {
             this.connectionError("There was a problem with the nickname");
         }
@@ -79,7 +79,6 @@ public class GUI extends Application {
         alert.setTitle("Warning message");
         alert.setContentText(message);
         alert.showAndWait();
-
     }
 
     private void initClient() {
@@ -148,12 +147,8 @@ public class GUI extends Application {
         System.exit(0);
     }
 
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
-
     public void setMessage(String message) {
-        Platform.runLater(() -> GUI.this.window.appendText("\n" + message));
+        Platform.runLater(() -> View.this.window.appendText("\n" + message));
     }
 
     public void newUserList(String[] userList2) {
@@ -163,5 +158,9 @@ public class GUI extends Application {
             FXCollections.sort(list);
             this.userList.setItems(list);
         });
+    }
+
+    public static void main(String[] args) {
+        Application.launch(args);
     }
 }

@@ -10,7 +10,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import client.GUI;
+import client.View;
 import interfaces.Chat;
 import interfaces.Server;
 import javafx.application.Application;
@@ -79,6 +79,6 @@ public class ChatServer extends UnicastRemoteObject implements Server {
 
         Thread.sleep(100);
 
-        Application.launch(GUI.class);
+        Application.launch(View.class);
     }
 }
