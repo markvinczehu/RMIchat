@@ -14,6 +14,8 @@ public class ChatClient extends UnicastRemoteObject implements Chat {
     private static final long serialVersionUID = 1L;
     private View view;
 
+    //Testing out branches
+
     public ChatClient(View view) throws RemoteException, MalformedURLException, NotBoundException {
         super();
         this.view = view;
